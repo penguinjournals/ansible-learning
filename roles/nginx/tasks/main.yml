@@ -1,0 +1,7 @@
+---
+- name: nginx is installed
+  apt: pkg=nginx state=latest
+- name: nginx setup for 8080 port proxing
+  template: src=nginx.conf dest=/etc/nginx/conf.d/default.conf
+  notify:
+    - restart nginx
