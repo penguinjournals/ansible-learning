@@ -1,7 +1,14 @@
 ---
-- hosts: localhost
+- hosts: all
   sudo: yes
   vars:
   tasks:
   - name: ensure vim is installed
     apt: pkg=vim state=latest
+  - name: ensure ntpd is at the latest version
+    apt: pkg=ntp state=latest
+    notify:
+      - restart ntp
+  handlers:
+    - name: restart ntp
+      service: name=ntp state=restarted
