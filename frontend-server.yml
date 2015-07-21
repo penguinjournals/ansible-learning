@@ -1,0 +1,8 @@
+---
+- hosts: all
+  sudo: yes
+  roles:
+    - role: ansiblebit.oracle-java
+      oracle_java_set_as_default: yes
+      oracle_java_version: 8
+    - role: nginx
