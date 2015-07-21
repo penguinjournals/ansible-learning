@@ -1,26 +1,9 @@
 ---
 - hosts: all
   sudo: yes
-  vars:
-  tasks:
-  - name: ntpd is installed
-    apt: pkg=ntp state=latest
-    notify:
-      - restart ntp
-  - name: vim is installed
-    apt: pkg=vim state=latest
-  - name: nginx is installed
-    apt: pkg=nginx state=latest
-  - name: nginx setup for 8080 port proxing
-    template: src=nginx.conf dest=/etc/nginx/conf.d/default.conf
-    notify:
-      - restart nginx
-  - name: java 7 is installed
-    apt: pkg=openjdk-7-jre state=latest update_cache=yes
-  - name: memcached is installed
-    apt: pkg=memcached state=latest
-  handlers:
-    - name: restart ntp
-      service: name=ntp state=restarted
-    - name: restart nginx
-      service: name=nginx state=restarted
+  roles:
+    - role: common
+    - role: ansiblebit.oracle-java
+      oracle_java_set_as_default: yes
+      oracle_java_version: 8
+    - role: nginx
